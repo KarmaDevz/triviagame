@@ -25,14 +25,13 @@ public class Game extends javax.swing.JFrame {
     private Question[] questions;
     private Set<Integer> shownQuestions;
     private int indicePreguntaAleatoria;
-    
 
     /**
      * Creates new form Game
      */
     public Game() {
         initComponents();
-        shownQuestions  = new HashSet<>();
+        shownQuestions = new HashSet<>();
         btnValidate.setEnabled(false);
     }
 
@@ -264,13 +263,20 @@ public class Game extends javax.swing.JFrame {
             new Question("¿Cuál es el río más largo del mundo?", new String[]{"Nilo", "Amazonas", "Yangtsé", "Misisipi"}, 1),
             new Question("¿Cuanto es 6/2(2+3)", new String[]{"6/10", "1", "9", "15"}, 2),
             new Question("¿Cuál es el país más poblado del mundo?", new String[]{"China", "India", "EEUU", "Rusia"}, 1),
-            new Question("¿Cuantos huesos tiene el ser humano?", new String[]{"132", "3", "192", "204"}, 3),
+            new Question("¿Cuantos huesos tiene un ser humano desarrollado?", new String[]{"132", "3", "192", "206"}, 3),
             new Question("¿Cuál es el idioma más hablado del mundo?", new String[]{"Mandarin", "Ingles", "Frances", "Sueco"}, 0),
-            new Question("¿Cual NO es un elemento de la tabla periodica?", new String[]{"Helio", "Oro", "Fluor", "Agua"}, 3), // Agrega más preguntas aquí
-        };
+            new Question("¿Cual NO es un elemento de la tabla periodica?", new String[]{"Helio", "Oro", "Fluor", "Agua"}, 3), 
+            //Preguntas David
+            new Question("¿Cuál es la capital de Colombia?", new String[]{"Medellín", "Santander", "Bogotá", "Cali"}, 2),
+            new Question("¿Cual es el plato tipico?", new String[]{"Mazamorra", "Bandeja paisa", "Tamal", "Changua"}, 3),
+            new Question("¿Cuanto es 10x30+75+7", new String[]{"375", "383", "3820", "382"}, 3),
+            new Question("¿Cuales son los números pares ?", new String[]{"20,60,80,4", "30,245,2,66", "10,15,40,20,4", "2,4,6,7,8,10"}, 1),
+            new Question("¿Cuál puede ser el animal carnívoro ?", new String[]{"un caballo", "un cocodrilo", "un loro", "un hipopótamo"}, 1),
+            new Question("¿Cuantas regiones tiene Colombia ?", new String[]{"6", "5", "7", "4"}, 0),
+            new Question("¿Cuál es el mejor amigo del hombre ?", new String[]{"gallo", "perro", "leon", "serpiente"}, 2),};
     }
 
-  
+
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
         // TODO add your handling code here:
         btnStart.setEnabled(false);
@@ -305,7 +311,7 @@ public class Game extends javax.swing.JFrame {
             @Override
             protected void done() {
                 btnStart.setEnabled(true);
-                JOptionPane.showMessageDialog(null, "Su resultado fue"+"\nRespuestas correctas: " +lblCorrectAnswers.getText()+"\nRespuestas Incorrectas: " +lblIncorrectAnswers.getText());
+                JOptionPane.showMessageDialog(null, "Su resultado fue" + "\nRespuestas correctas: " + lblCorrectAnswers.getText() + "\nRespuestas Incorrectas: " + lblIncorrectAnswers.getText());
             }
         };
 
@@ -314,7 +320,7 @@ public class Game extends javax.swing.JFrame {
 
     private void mostrarPreguntaAleatoria(Question[] questions) {
         // Obtener una pregunta aleatoria del banco de preguntas
-       if (shownQuestions.size() == questions.length) {
+        if (shownQuestions.size() == questions.length) {
             JOptionPane.showMessageDialog(this, "No hay más preguntas disponibles. Reinicia el juego.");
             btnStart.setEnabled(true);
             return;
@@ -325,8 +331,7 @@ public class Game extends javax.swing.JFrame {
         } while (shownQuestions.contains(indicePreguntaAleatoria));
 
         shownQuestions.add(indicePreguntaAleatoria);
-        
-        
+
         Question preguntaAleatoria = questions[indicePreguntaAleatoria];
 
         // Mostrar la pregunta y sus opciones en la interfaz gráfica
