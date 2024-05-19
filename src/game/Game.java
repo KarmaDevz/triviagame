@@ -5,6 +5,7 @@
 package game;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.concurrent.TimeUnit;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
@@ -31,8 +33,17 @@ public class Game extends javax.swing.JFrame {
      */
     public Game() {
         initComponents();
+        setTitle("Trivia Game THINKING FAST");
         shownQuestions = new HashSet<>();
         btnValidate.setEnabled(false);
+        ImageIcon icon = new ImageIcon(getClass().getResource("/assets/R.png"));
+        setIconImage(icon.getImage());
+        String rutaImagen = "/assets/ico1.png"; // Ruta relativa dentro del proyecto
+        ImageIcon icono = new ImageIcon(getClass().getResource(rutaImagen));
+        ImageIcon iconoEscalado = escalarImagen(icono);
+        ico1.setIcon(iconoEscalado);
+        ico2.setIcon(iconoEscalado);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -63,11 +74,16 @@ public class Game extends javax.swing.JFrame {
         btnValidate = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
+        ico2 = new javax.swing.JLabel();
+        ico1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 255));
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
 
+        btnStart.setBackground(new java.awt.Color(255, 255, 255));
+        btnStart.setForeground(new java.awt.Color(0, 0, 0));
         btnStart.setText("Comenzar");
         btnStart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,14 +92,18 @@ public class Game extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Tiempo");
 
+        lblTime.setForeground(new java.awt.Color(255, 255, 255));
         lblTime.setText("60");
 
         AnswersGroup.add(rbOption1);
+        rbOption1.setForeground(new java.awt.Color(255, 255, 255));
         rbOption1.setText("Respuesta 1");
 
         AnswersGroup.add(rbOption2);
+        rbOption2.setForeground(new java.awt.Color(255, 255, 255));
         rbOption2.setText("Respuesta 2");
         rbOption2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,9 +112,11 @@ public class Game extends javax.swing.JFrame {
         });
 
         AnswersGroup.add(rbOption3);
+        rbOption3.setForeground(new java.awt.Color(255, 255, 255));
         rbOption3.setText("Respuesta 3");
 
         AnswersGroup.add(rbOption4);
+        rbOption4.setForeground(new java.awt.Color(255, 255, 255));
         rbOption4.setText("Respuesta 4");
         rbOption4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,19 +124,26 @@ public class Game extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Preguntas hechas:");
 
+        lblQuestionsDone.setForeground(new java.awt.Color(255, 255, 255));
         lblQuestionsDone.setText("0");
 
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Preguntas correctas:");
 
+        lblCorrectAnswers.setForeground(new java.awt.Color(255, 255, 255));
         lblCorrectAnswers.setText("0");
 
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Preguntas incorrectas:");
 
+        lblIncorrectAnswers.setForeground(new java.awt.Color(255, 255, 255));
         lblIncorrectAnswers.setText("0");
 
         lblQuestion.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        lblQuestion.setForeground(new java.awt.Color(255, 255, 255));
         lblQuestion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblQuestion.setText("Pregunta");
 
@@ -133,11 +162,6 @@ public class Game extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(rbOption2)
-                        .addGap(68, 68, 68)
-                        .addComponent(btnValidate, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(rbOption1)
                             .addComponent(rbOption4)
@@ -154,21 +178,25 @@ public class Game extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblIncorrectAnswers))
                             .addComponent(rbOption3))
-                        .addGap(193, 193, 193)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(rbOption2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnValidate, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33))))
             .addComponent(lblQuestion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(147, 147, 147))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblTime)
-                        .addGap(169, 169, 169))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(145, 145, 145)
+                .addComponent(jLabel1)
+                .addGap(0, 0, 0))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(172, 172, 172)
+                .addComponent(lblTime)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,7 +234,7 @@ public class Game extends javax.swing.JFrame {
                 .addGap(56, 56, 56))
         );
 
-        jPanel2.setBackground(new java.awt.Color(51, 51, 255));
+        jPanel2.setBackground(new java.awt.Color(153, 153, 255));
 
         jLabel9.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 36)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -216,29 +244,39 @@ public class Game extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(85, 85, 85)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(ico1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel9)
-                .addGap(69, 69, 69))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ico2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel9)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ico1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ico2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel9))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 12, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,7 +303,7 @@ public class Game extends javax.swing.JFrame {
             new Question("¿Cuál es el país más poblado del mundo?", new String[]{"China", "India", "EEUU", "Rusia"}, 1),
             new Question("¿Cuantos huesos tiene un ser humano desarrollado?", new String[]{"132", "3", "192", "206"}, 3),
             new Question("¿Cuál es el idioma más hablado del mundo?", new String[]{"Mandarin", "Ingles", "Frances", "Sueco"}, 0),
-            new Question("¿Cual NO es un elemento de la tabla periodica?", new String[]{"Helio", "Oro", "Fluor", "Agua"}, 3), 
+            new Question("¿Cual NO es un elemento de la tabla periodica?", new String[]{"Helio", "Oro", "Fluor", "Agua"}, 3),
             //Preguntas David
             new Question("¿Cuál es la capital de Colombia?", new String[]{"Medellín", "Santander", "Bogotá", "Cali"}, 2),
             new Question("¿Cual es el plato tipico?", new String[]{"Mazamorra", "Bandeja paisa", "Tamal", "Changua"}, 3),
@@ -276,6 +314,20 @@ public class Game extends javax.swing.JFrame {
             new Question("¿Cuál es el mejor amigo del hombre ?", new String[]{"gallo", "perro", "leon", "serpiente"}, 2),};
     }
 
+    private boolean allQuestionsShown() {
+        return shownQuestions.size() == questions.length;
+    }
+
+    private ImageIcon escalarImagen(ImageIcon icono) {
+        Image imagen = icono.getImage();
+
+// Escalar la imagen para que se ajuste al tamaño del JLabel
+        Image imagenEscalada = imagen.getScaledInstance(ico1.getWidth(), ico1.getHeight(), Image.SCALE_SMOOTH);
+
+// Crear un nuevo ImageIcon con la imagen escalada
+        ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+        return iconoEscalado;
+    }
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
         // TODO add your handling code here:
@@ -289,40 +341,52 @@ public class Game extends javax.swing.JFrame {
         mostrarPreguntaAleatoria(questions);
     }//GEN-LAST:event_btnStartActionPerformed
     private void iniciarTemporizador() {
-        int tiempoInicial = Integer.parseInt(lblTime.getText());
+    int tiempoInicial = Integer.parseInt(lblTime.getText());
 
-        SwingWorker<Void, Integer> worker = new SwingWorker<Void, Integer>() {
-            @Override
-            protected Void doInBackground() throws Exception {
-                int tiempoRestante = tiempoInicial;
-                while (tiempoRestante > 0) {
-                    tiempoRestante--;
-                    publish(tiempoRestante);
-                    Thread.sleep(1000);
+    SwingWorker<Void, Integer> worker = new SwingWorker<>() {
+        @Override
+        protected Void doInBackground() throws Exception {
+            int tiempoRestante = tiempoInicial;
+            while (tiempoRestante > 0) {
+                if (allQuestionsShown()) {
+                    break;
                 }
-                return null;
+                tiempoRestante--;
+                publish(tiempoRestante);
+                Thread.sleep(1000);
             }
+            return null;
+        }
 
-            @Override
-            protected void process(List<Integer> chunks) {
-                lblTime.setText(String.valueOf(chunks.get(chunks.size() - 1)));
+        @Override
+        protected void process(List<Integer> chunks) {
+            lblTime.setText(String.valueOf(chunks.get(chunks.size() - 1)));
+        }
+
+        @Override
+        protected void done() {
+            if (allQuestionsShown()) {
+                JOptionPane.showMessageDialog(Game.this, "¡Todas las preguntas han sido mostradas!");
+            } else {
+                JOptionPane.showMessageDialog(Game.this, "¡Tiempo terminado!");
             }
+            btnStart.setEnabled(true);
+            btnValidate.setEnabled(false);
+        }
+    };
 
-            @Override
-            protected void done() {
-                btnStart.setEnabled(true);
-                JOptionPane.showMessageDialog(null, "Su resultado fue" + "\nRespuestas correctas: " + lblCorrectAnswers.getText() + "\nRespuestas Incorrectas: " + lblIncorrectAnswers.getText());
-            }
-        };
+    worker.execute();
+}
 
-        worker.execute();
-    }
 
     private void mostrarPreguntaAleatoria(Question[] questions) {
         // Obtener una pregunta aleatoria del banco de preguntas
         if (shownQuestions.size() == questions.length) {
-            JOptionPane.showMessageDialog(this, "No hay más preguntas disponibles. Reinicia el juego.");
+
+            JOptionPane.showMessageDialog(this, "Felicidades. No hay más preguntas disponibles. \n" + "\nRespuestas correctas: " + lblCorrectAnswers.getText() + "\nRespuestas Incorrectas: " + lblIncorrectAnswers.getText() + "\nTiempo Restante: " + lblTime.getText() + " segundos");
+
             btnStart.setEnabled(true);
+
             return;
         }
         Random random = new Random();
@@ -345,30 +409,34 @@ public class Game extends javax.swing.JFrame {
         rbOption4.setText(opciones[3]);
     }
     private void btnValidateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidateActionPerformed
-        String pregunta = lblQuestion.getText();
-        int respuesta = obtenerRespuesta();
-        int p = buscarPregunta(pregunta);
-        if (pregunta != null) {
+        if (obtenerRespuesta() == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione primero una respuesta");
+        } else {
+            String pregunta = lblQuestion.getText();
+            int respuesta = obtenerRespuesta();
+            int p = buscarPregunta(pregunta);
+            if (pregunta != null) {
 
-            String e = lblQuestionsDone.getText();
-            int f = Integer.parseInt(e);
-            f++;
-            lblQuestionsDone.setText(f + "");
-            if (respuesta == p) {
-                // La respuesta es correcta
-                String c = lblCorrectAnswers.getText();
-                int d = Integer.parseInt(c);
-                d++;
-                lblCorrectAnswers.setText(d + "");
-            } else {
-                // La respuesta es incorrecta
-                String c = lblIncorrectAnswers.getText();
-                int d = Integer.parseInt(c);
-                d++;
-                lblIncorrectAnswers.setText(d + "");
+                String e = lblQuestionsDone.getText();
+                int f = Integer.parseInt(e);
+                f++;
+                lblQuestionsDone.setText(f + "");
+                if (respuesta == p) {
+                    // La respuesta es correcta
+                    String c = lblCorrectAnswers.getText();
+                    int d = Integer.parseInt(c);
+                    d++;
+                    lblCorrectAnswers.setText(d + "");
+                } else {
+                    // La respuesta es incorrecta
+                    String c = lblIncorrectAnswers.getText();
+                    int d = Integer.parseInt(c);
+                    d++;
+                    lblIncorrectAnswers.setText(d + "");
+                }
             }
+            mostrarPreguntaAleatoria(questions);
         }
-        mostrarPreguntaAleatoria(questions);
     }//GEN-LAST:event_btnValidateActionPerformed
     private int buscarPregunta(String preguntaText) {
         for (Question pregunta : questions) {
@@ -436,6 +504,8 @@ public class Game extends javax.swing.JFrame {
     private javax.swing.ButtonGroup AnswersGroup;
     private javax.swing.JButton btnStart;
     private javax.swing.JButton btnValidate;
+    private javax.swing.JLabel ico1;
+    private javax.swing.JLabel ico2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
