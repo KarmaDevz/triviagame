@@ -6,7 +6,7 @@ Bienvenido al proyecto de Trivia Game, una aplicación de Java Swing diseñada p
 
 - **Interfaz de usuario amigable:** Diseñada con Java Swing para una experiencia intuitiva.
 - **Banco de preguntas:** Una colección variada de preguntas de cultura general.
-- **Temporizador:** Cuenta regresiva de 60 segundos para cada pregunta.
+- **Temporizador:** Cuenta regresiva de 60 segundos por cada juego.
 - **Estadísticas:** Muestra el número de preguntas hechas, respuestas correctas e incorrectas.
 
 ## Capturas de Pantalla
