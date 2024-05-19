@@ -15,10 +15,10 @@ Bienvenido al proyecto de Trivia Game, una aplicación de Java Swing diseñada p
 ![Pantalla de Inicio](https://github.com/KarmaDevz/triviagame/blob/master/src/assets/pantallaInicio.png)
 
 ### Pregunta en Pantalla
-![Pregunta en Pantalla](https://github.com/KarmaDevz/triviagame/blob/master/src/assets/pantallaResultado.png)
+![Pregunta en Pantalla](https://github.com/KarmaDevz/triviagame/blob/master/src/assets/preguntaPantalla.png)
 
 ### Resultados
-![Resultados](https://github.com/KarmaDevz/triviagame/blob/master/src/assets/preguntaPantalla.png)
+![Resultados](https://github.com/KarmaDevz/triviagame/blob/master/src/assets/pantallaResultado.png)
 
 ## Cómo Empezar
 
