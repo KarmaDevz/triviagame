@@ -331,6 +331,7 @@ public class Game extends javax.swing.JFrame {
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
         // TODO add your handling code here:
+        shownQuestions.clear();
         btnStart.setEnabled(false);
         btnValidate.setEnabled(true);
         inicializarPreguntas();
