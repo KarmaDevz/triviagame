@@ -4,7 +4,6 @@
  */
 package game;
 
-import java.awt.Color;
 import java.awt.Image;
 import java.util.HashSet;
 import java.util.List;
@@ -25,7 +24,7 @@ import javax.swing.SwingWorker;
 public class Game extends javax.swing.JFrame {
 
     private Question[] questions;
-    private Set<Integer> shownQuestions;
+    private final Set<Integer> shownQuestions;
     private int indicePreguntaAleatoria;
 
     /**
@@ -101,6 +100,11 @@ public class Game extends javax.swing.JFrame {
         AnswersGroup.add(rbOption1);
         rbOption1.setForeground(new java.awt.Color(255, 255, 255));
         rbOption1.setText("Respuesta 1");
+        rbOption1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbOption1ActionPerformed(evt);
+            }
+        });
 
         AnswersGroup.add(rbOption2);
         rbOption2.setForeground(new java.awt.Color(255, 255, 255));
@@ -185,17 +189,17 @@ public class Game extends javax.swing.JFrame {
                         .addComponent(btnValidate, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33))))
             .addComponent(lblQuestion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(145, 145, 145)
-                .addComponent(jLabel1)
-                .addGap(0, 0, 0))
+                .addComponent(jLabel1))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(172, 172, 172)
-                .addComponent(lblTime)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(172, 172, 172)
+                        .addComponent(lblTime)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -292,7 +296,7 @@ public class Game extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rbOption4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbOption4ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_rbOption4ActionPerformed
     private void inicializarPreguntas() {
         // Inicializa el array de preguntas con tus preguntas
@@ -334,6 +338,10 @@ public class Game extends javax.swing.JFrame {
         shownQuestions.clear();
         btnStart.setEnabled(false);
         btnValidate.setEnabled(true);
+        lblTime.setText("61");
+        lblQuestionsDone.setText("0");
+        lblCorrectAnswers.setText("0");
+        lblIncorrectAnswers.setText("0");
         inicializarPreguntas();
         // Iniciar el temporizador
         iniciarTemporizador();
@@ -342,49 +350,51 @@ public class Game extends javax.swing.JFrame {
         mostrarPreguntaAleatoria(questions);
     }//GEN-LAST:event_btnStartActionPerformed
     private void iniciarTemporizador() {
-    int tiempoInicial = Integer.parseInt(lblTime.getText());
+        int tiempoInicial = Integer.parseInt(lblTime.getText());
 
-    SwingWorker<Void, Integer> worker = new SwingWorker<>() {
-        @Override
-        protected Void doInBackground() throws Exception {
-            int tiempoRestante = tiempoInicial;
-            while (tiempoRestante > 0) {
-                if (allQuestionsShown()) {
-                    break;
+        SwingWorker<Void, Integer> worker = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                int tiempoRestante = tiempoInicial;
+                while (tiempoRestante > 0) {
+                    if (allQuestionsShown()) {
+                        break;
+                    }
+                    tiempoRestante--;
+                    publish(tiempoRestante);
+                    Thread.sleep(1000);
                 }
-                tiempoRestante--;
-                publish(tiempoRestante);
-                Thread.sleep(1000);
+                return null;
             }
-            return null;
-        }
 
-        @Override
-        protected void process(List<Integer> chunks) {
-            lblTime.setText(String.valueOf(chunks.get(chunks.size() - 1)));
-        }
-
-        @Override
-        protected void done() {
-            if (allQuestionsShown()) {
-                JOptionPane.showMessageDialog(Game.this, "¡Todas las preguntas han sido mostradas!");
-            } else {
-                JOptionPane.showMessageDialog(Game.this, "¡Tiempo terminado!");
+            @Override
+            protected void process(List<Integer> chunks) {
+                lblTime.setText(String.valueOf(chunks.get(chunks.size() - 1)));
             }
-            btnStart.setEnabled(true);
-            btnValidate.setEnabled(false);
-        }
-    };
 
-    worker.execute();
-}
+            @Override
+            protected void done() {
+                if (allQuestionsShown()) {
+                    JOptionPane.showMessageDialog(Game.this, "¡Todas las preguntas han sido mostradas!");
+                } else {
+                    JOptionPane.showMessageDialog(Game.this, "¡Tiempo terminado!");
+                    JOptionPane.showMessageDialog(Game.this, "Felicidades. \n" + "\nRespuestas correctas: " + lblCorrectAnswers.getText() + "\nRespuestas Incorrectas: " + lblIncorrectAnswers.getText() + "\nTiempo Restante: " + lblTime.getText() + " segundos");
 
+                }
+
+                btnStart.setEnabled(true);
+                btnValidate.setEnabled(false);
+            }
+        };
+
+        worker.execute();
+    }
 
     private void mostrarPreguntaAleatoria(Question[] questions) {
         // Obtener una pregunta aleatoria del banco de preguntas
         if (shownQuestions.size() == questions.length) {
 
-            JOptionPane.showMessageDialog(this, "Felicidades. No hay más preguntas disponibles. \n" + "\nRespuestas correctas: " + lblCorrectAnswers.getText() + "\nRespuestas Incorrectas: " + lblIncorrectAnswers.getText() + "\nTiempo Restante: " + lblTime.getText() + " segundos");
+            JOptionPane.showMessageDialog(Game.this, "Felicidades. \n" + "\nRespuestas correctas: " + lblCorrectAnswers.getText() + "\nRespuestas Incorrectas: " + lblIncorrectAnswers.getText() + "\nTiempo Restante: " + lblTime.getText() + " segundos");
 
             btnStart.setEnabled(true);
 
@@ -437,7 +447,9 @@ public class Game extends javax.swing.JFrame {
                 }
             }
             mostrarPreguntaAleatoria(questions);
+            AnswersGroup.clearSelection();
         }
+
     }//GEN-LAST:event_btnValidateActionPerformed
     private int buscarPregunta(String preguntaText) {
         for (Question pregunta : questions) {
@@ -450,7 +462,6 @@ public class Game extends javax.swing.JFrame {
 
     private int obtenerRespuesta() {
         if (rbOption1.isSelected()) {
-
             return 0;
         } else if (rbOption2.isSelected()) {
             return 1;
@@ -465,6 +476,10 @@ public class Game extends javax.swing.JFrame {
     private void rbOption2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbOption2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rbOption2ActionPerformed
+
+    private void rbOption1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbOption1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbOption1ActionPerformed
 
     /**
      * @param args the command line arguments
